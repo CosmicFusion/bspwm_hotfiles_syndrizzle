@@ -195,24 +195,11 @@ Since we are using xfce4-power-manager, we might want to make it toggle the lock
 xfconf-query -c xfce4-session -p /general/LockCommand -s "$HOME/.scripts/lock-run" --create -t string
 ```
 
-## Support:
-You can always show your support towards these rices by donating me, as this takes a lot of time and hardwork, thank you for everything!
-
-<b>Ko-Fi:</b> <br>
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/A0A8DKCLY) <br>
-
-<b>Librepay:</b> <br>
-<a href="https://liberapay.com/syndrizzle/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
-
 ## Credits:
 
 #### Thanks to:
-* [rxyhn](https://github.com/rxyhn)
-* [pagankeymaster](https://github.com/pagankeymaster)
-* [beyond9thousand](https://github.com/beyond9thousand)
-* [siduck](https://github.com/siduck)
-* [kizu](https://github.com/janleigh)
-* All the members of r/unixporn community and the discord server!
+
+* [Syndrizzle](https://github.com/Syndrizzle/hotfiles)
 ---
 * **The wallpapers have been taken from [Wallhaven](https://wallhaven.cc), [pexels](https://pexels.com) and the [tokyo night gtk theme  repository](https://github.com/Fausto-Korpsvart/Tokyo-Night-GTK-Theme/tree/master/wallpapers)**<br>
 * **The icons are from [icons8](https://icons8.com), [flaticon](https://flaticon.com), [materialdesignicons](https://materialdesignicons.com), [IcoMoon](https://icomoon.io), [feather-icons](https://feathericons.com/) and [Nerd Fonts](https://www.nerdfonts.com)**<br>

@@ -2,21 +2,38 @@
 STATUS=$(nmcli | grep  $(ip route | grep '^default' | awk '{print $5}') | awk 'FNR == 1 {print $2}')
 SSID=$(iwgetid | awk -F '"' '{ print $2 }')
 STRENGTH=$(awk 'NR==3 {printf("%.0f",$3*10/7)}' /proc/net/wireless)
+DEFAULT_NETWORK_INTERFACE=$(ip route | grep '^default' | awk '{print $5}' | head -n1)
 
-if ls /sys/class/net/$(ip route | grep '^default' | awk '{print $5}')/wireless
+if ls /sys/class/net/$DEFAULT_NETWORK_INTERFACE/wireless
 then
 export DEFAULT_NETWORK_TYPE=wireless
 else
 export DEFAULT_NETWORK_TYPE=wired
 fi
 
+if [[ -z $SSID ]]
+then
+	export SSID=$DEFAULT_NETWORK_INTERFACE
+fi
+
 toggle() {
-    if [[ $STATUS == "connected" ]]; then
-        nmcli radio wifi off
-        notify-send --icon=window-close --urgency=normal "Wi-Fi" "Wi-Fi has been turned off!"
+    if [[ "$DEFAULT_NETWORK_TYPE" == wireless ]]
+    then
+	    if [[ $STATUS == "connected" ]]; then
+	        nmcli radio wifi off
+	        notify-send --icon=window-close --urgency=normal "Wi-Fi" "Wi-Fi has been turned off!"
+	    else
+	        nmcli radio wifi on
+	        notify-send --icon=checkmark --urgency=normal "Wi-Fi" "Wi-Fi has been turned on, you are back online!"
+	    fi
     else
-        nmcli radio wifi on
-        notify-send --icon=checkmark --urgency=normal "Wi-Fi" "Wi-Fi has been turned on, you are back online!"
+	    if [[ $STATUS == "connected" ]]; then
+	        nmcli d disconnect $DEFAULT_NETWORK_INTERFACE
+	        notify-send --icon=window-close --urgency=normal "Ethernet" "Ethernet has been turned off!"
+	    else
+	        nmcli d connect $DEFAULT_NETWORK_INTERFACE
+	        notify-send --icon=checkmark --urgency=normal "Ethernet" "Ethernet has been turned on, you are back online!"
+	    fi
     fi
 }
 

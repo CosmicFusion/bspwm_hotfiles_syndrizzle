@@ -1,0 +1,10 @@
+#!/bin/bash
+    wid=$(xprop -root _NET_ACTIVE_WINDOW | cut -d ' ' -f 5 || echo "0x0" )
+    if [ "$wid" != "0x0" ]; then
+        cls=$(xprop -id $wid WM_CLASS)
+        cls=$(echo $cls | cut -d ' ' -f 4)
+        cls=$(echo $cls | sed -e 's/^.//;s/.$//;s/^\(.\)/\u\1/')
+        echo "$cls"
+    else
+        echo "$(cat /etc/os-release | awk 'NR==1'| awk -F '"' '{print $2}')"
+    fi

@@ -3,7 +3,7 @@ STATUS=$(nmcli | grep  $(ip route | grep '^default' | awk '{print $5}') | awk 'F
 SSID=$(iwgetid | awk -F '"' '{ print $2 }')
 STRENGTH=$(awk 'NR==3 {printf("%.0f",$3*10/7)}' /proc/net/wireless)
 
-if ls /sys/class/net/$(ip route | grep '^default' | awk '{print $5}') | awk 'FNR == 1 {print $2}')/wireless
+if ls /sys/class/net/$(ip route | grep '^default' | awk '{print $5}')/wireless
 then
 export DEFAULT_NETWORK_TYPE=wireless
 else

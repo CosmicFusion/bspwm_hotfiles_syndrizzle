@@ -177,6 +177,6 @@ XF86MonBrightnessDown
   brightnessctl s 20- && $HOME/.config/eww/Misc/scripts/brightness
 
 # Toggle right click context menu.
-~button3
-	   rm -rf ~/.jgmenu-lockfile & jgmenu --at-pointer
+#~button3
+#	   rm -rf ~/.jgmenu-lockfile & jgmenu --at-pointer
 

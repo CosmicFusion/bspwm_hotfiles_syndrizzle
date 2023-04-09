@@ -55,8 +55,8 @@
       (box :orientation "h" :class "main-wifi-box ${network-class == "󰤨" ? "main-wifi-box-on" : "main-wifi-box-off"}" :space-evenly "false"
         (button :class "main-wifi-button ${network-class == "󰤨" ? "main-wifi-button-on" : "main-wifi-button-off"}" :onclick "System-Menu/scripts/network --toggle" "${network-icon}")
         (box :class "wifi-labels-box" :orientation "v" :space-evenly "false" :spacing 5
-          (button :halign "start" :class "wifi-label-button ${network-class == "󰤨" ? "wifi-label-button-on" : "wifi-label-button-off"}" :onclick "System-Menu/scripts/network --toggle" "Wi-Fi")
-          (label :class "wifi-status-button ${network-class == "󰤨" ? "wifi-status-button-on" : "wifi-status-button-off"}" :limit-width "10" :text "${network-status}"))
+          (button :halign "start" :class "wifi-label-button ${network-class == "󰤨" ? "wifi-label-button-on" : "wifi-label-button-off"}" :onclick "System-Menu/scripts/network --toggle" "Internet")
+          (label :class "wifi-status-button ${network-class == "󰤨" ? "wifi-status-button-on" : "wifi-status-button-off"}" :limit-width "20" :text "${network-status}"))
         (box :class "wifi-buttons-box" :orientation "h" :space-evenly "false"
           (label :class "seperator" :text "")
           (button :class "arrow" :onclick "System-Menu/scripts/launch wifi" "")))

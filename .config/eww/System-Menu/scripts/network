@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-STATUS=$(nmcli | grep  $(ip route | grep '^default' | awk '{print $5}') | awk 'FNR == 1 {print $2}')
+STATUS=$(nmcli | grep  $(nmcli device show | head -n1 | cut -d$' ' -f26) | awk 'FNR == 1 {print $2}')
 SSID=$(iwgetid | awk -F '"' '{ print $2 }')
 STRENGTH=$(awk 'NR==3 {printf("%.0f",$3*10/7)}' /proc/net/wireless)
-DEFAULT_NETWORK_INTERFACE=$(ip route | grep '^default' | awk '{print $5}' | head -n1)
+DEFAULT_NETWORK_INTERFACE=$(nmcli device show | head -n1 | cut -d$' ' -f26)
 
 if ls /sys/class/net/$DEFAULT_NETWORK_INTERFACE/wireless
 then
@@ -20,10 +20,10 @@ toggle() {
     if [[ "$DEFAULT_NETWORK_TYPE" == wireless ]]
     then
 	    if [[ $STATUS == "connected" ]]; then
-	        nmcli radio wifi off
+	        nmcli d disconnect $DEFAULT_NETWORK_INTERFACE
 	        notify-send --icon=window-close --urgency=normal "Wi-Fi" "Wi-Fi has been turned off!"
 	    else
-	        nmcli radio wifi on
+	        nmcli d connect $DEFAULT_NETWORK_INTERFACE
 	        notify-send --icon=checkmark --urgency=normal "Wi-Fi" "Wi-Fi has been turned on, you are back online!"
 	    fi
     else
@@ -59,27 +59,27 @@ icon() {
 }
 
 status() {
-    if [[ $STATUS == "connected" ]]; then
-        echo $SSID
-    else
-        echo Disconnected
-    fi
-}
-
-class(){
     if [[ "$DEFAULT_NETWORK_TYPE" == wireless ]]
     then
 	    if [[ $STATUS == "connected" ]]; then
-	        echo "󰤨"
+	        echo $SSID
 	    else
-	        echo "󰤭"
+	        echo Disconnected
 	    fi
     else
 	    if [[ $STATUS == "connected" ]]; then
-	        echo "🖧"
+	        echo $SSID
 	    else
-	        echo "☓"
+	        echo Disconnected
 	    fi
+    fi
+}
+
+class() {
+    if [[ $STATUS == "connected" ]]; then
+    	echo "󰤨"
+    else
+    	echo "󰤭"
     fi
 }
 
@@ -92,4 +92,3 @@ elif [[ $1 == "--status" ]]; then
 elif [[ $1 == "--class" ]]; then
     class
 fi
-

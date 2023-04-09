@@ -4,7 +4,7 @@ SSID=$(iwgetid | awk -F '"' '{ print $2 }')
 STRENGTH=$(awk 'NR==3 {printf("%.0f",$3*10/7)}' /proc/net/wireless)
 DEFAULT_NETWORK_INTERFACE=$(nmcli device show | head -n1 | cut -d$' ' -f26)
 
-if ls /sys/class/net/$DEFAULT_NETWORK_INTERFACE/wireless
+if [[ -d /sys/class/net/$DEFAULT_NETWORK_INTERFACE/wireless ]]
 then
 export DEFAULT_NETWORK_TYPE=wireless
 else
